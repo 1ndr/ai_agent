@@ -1,18 +1,21 @@
 import os
 
 def get_files_info(working_directory, directory="."):
-    abs_path_to_dir = os.path.abspath(directory)
-    abs_path_to_work_dir = os.path.abspath(working_directory)
+    obspath_w_directory = os.path.abspath(working_directory)
+    obspath_w_directory_and_directory = os.path.join(obspath_w_directory, directory)
 
-    rel_path_dir = os.path.join(working_directory, directory)
-    abs_path_to_dir_from_work_dir = os.path.abspath(rel_path_dir)
+    full_path_to_directory = os.path.join(working_directory, directory)
+    obspath_full_path_to_directory = os.path.abspath(full_path_to_directory)
 
-    if abs_path_to_dir != abs_path_to_dir_from_work_dir:
-        raise Exception(f"rror: Cannot list "{directory}" as it is outside the permitted working directory")
+    if obspath_w_directory_and_directory != obspath_full_path_to_directory:
+        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory"
 
-    if: 
-
+    if os.path.isdir(obspath_full_path_to_directory):
+        return f'Error: "{directory}" is not a directory'
     
+    items_list = os.listdir(directory)
 
-def finding_directory_in_working_directory(working_directory, directory):
-    
+    for item in items_list:
+        is_dir = not os.path.isfile(item)
+        file_size = os.path.getsize(item)
+        print f'- {item}: file_size={file_size} bytes, is_dir={is_dir}\n'
