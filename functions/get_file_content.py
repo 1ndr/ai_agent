@@ -1,4 +1,5 @@
 import os
+from config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
     try:
@@ -14,8 +15,8 @@ def get_file_content(working_directory, file_path):
         if not os.path.isfile(target_path):
             return f'Error: File not found or is not a regular file: "{file_path}"' 
         
-        
-
+        with open(target_path) as f:
+            f.read()
 
 
 
