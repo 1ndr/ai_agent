@@ -2,6 +2,7 @@ import os
 import argparse
 
 from dotenv import load_dotenv
+from prompts import system_prompt
 from google import genai
 from google.genai import types
 
@@ -21,7 +22,9 @@ def main():
     client = genai.Client(api_key=api_key)
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents = messages
+        contents = messages,
+        config = types.GenerateContentConfig(system_instruction = system_prompt,
+        temperature= 0)
     )
    
     if args.verbose:
