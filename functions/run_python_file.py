@@ -10,9 +10,9 @@ def run_python_file(working_directory, file_path, args=None):
         shared_path = os.path.commonpath([abs_path_wd, target_file])
 
         if shared_path != abs_path_wd:
-            return f'Error: Cannot execute "{file_path}" as it is outside the permitted working directory"
+            return f'Error: Cannot execute "{file_path}" as it is outside the permitted working directory'
         
-        if os.path.isfile(target_file):
+        if not os.path.isfile(target_file):
             return f'Error: "{file_path}" does not exist or is not a regular file'
         
         last_three_chars = target_file[-3:]
