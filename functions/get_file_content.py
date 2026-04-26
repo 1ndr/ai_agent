@@ -1,6 +1,20 @@
 import os
 from config import MAX_CHARS
 
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_file_content",
+    description="Returns the contents of a file in a specified file_path relative to the working directory",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                types=types.Type.STRING,
+                description="path to the file relative to the working directory",
+            ),
+        },
+    ),
+)
+
 def get_file_content(working_directory, file_path):
     try:
         abs_path_wd = os.path.abspath(working_directory)

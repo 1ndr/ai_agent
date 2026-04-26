@@ -1,6 +1,25 @@
 import os
 import subprocess
 
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="executes a python file, with an optional list of arguments (args)",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="path to the file, relative to the working directory",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                items=types.Schema(type=types.Type.String),
+                description="additional arguments for the function. Default is NONE",
+            ),
+        },
+    ),
+)
+
 def run_python_file(working_directory, file_path, args=None):
     try:
         abs_path_wd = os.path.abspath(working_directory)
