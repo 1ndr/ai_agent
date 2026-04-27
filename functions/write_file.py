@@ -13,7 +13,7 @@ schema_write_file = types.FunctionDeclaration(
                 description="the file path to the file."
             ),
             "content": types.Schema(
-                type=types.Schema.STRING,
+                type=types.Type.STRING,
                 description="the content that is written into the file"
             ),
         },
