@@ -64,7 +64,7 @@ def generate_content(client, messages, verbose):
         if function_call_result.parts[0].function_response.response == None:
             raise ValueError ("function_call_results.parts[0].function_response.response has returned with None (no value)")
 
-        function_call_result_response_lst.append(function_call-result.parts[0])
+        function_call_result_response_lst.append(function_call_result.parts[0])
 
         if verbose:
             print(f"-> {function_call_result.parts[0].function_response.response}")

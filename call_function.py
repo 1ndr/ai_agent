@@ -22,12 +22,12 @@ available_functions = types.Tool(
 
 def call_function(function_call, verbose = False):
     if verbose == True:
-        print(f"Calling function: {function_call.name}\({funciton_call.args}\)")
+        print(f"Calling function: {function_call.name}({function_call.args})")
     else:
         print(f" - Calling function: {function_call.name}")
 
     function_map = {
-        "get_files_info": get_files_info
+        "get_files_info": get_files_info,
         "get_file_content": get_file_content,
         "run_python_file": run_python_file,
         "write_file": write_file
@@ -40,13 +40,13 @@ def call_function(function_call, verbose = False):
             parts = [
                 types.Part.from_function_response(
                     name = function_name,
-                    response = {"error": f"Unknown function: {function_name"}"},
+                    response = {"error": f"Unknown function: {function_name}"},
                 )
             ],
         )
     
     args = dict(function_call.args) if function_call.args else {}
-    args["working directory"] = "./calculator"
+    args["working_directory"] = "./calculator"
 
     function_result = function_map[function_call.name](**args)
 
