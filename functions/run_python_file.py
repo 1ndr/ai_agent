@@ -18,7 +18,7 @@ schema_run_python_file = types.FunctionDeclaration(
                 items=types.Schema(type=types.Type.String),
                 description="additional arguments for the function. Default is NONE",
             ),
-        },
+        }, required = ["file_path"],
     ),
 )
 

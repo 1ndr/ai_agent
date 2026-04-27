@@ -10,10 +10,11 @@ schema_get_files_info = types.FunctionDeclaration(
         type=types.Type.OBJECT,
         properties={
             "file_path": types.Schema(
-                types=types.Type.STRING,
+                type=types.Type.STRING,
                 description="path to the file relative to the working directory",
             ),
         },
+        required = ["file_path"],
     ),
 )
 
