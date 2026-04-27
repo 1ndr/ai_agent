@@ -35,10 +35,13 @@ def main():
         print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
         print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
+    functions_call_present = False
     for function_call in response.function_calls:
         print(f"Calling function: {function_call.name}({function_call.args})")
+        functions_call_present = True
 
-    print(response.text)
+    if functions_call_present == False:
+        print(response.text)
 
 
 if __name__ == "__main__":
