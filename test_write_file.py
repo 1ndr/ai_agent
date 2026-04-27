@@ -1,4 +1,3 @@
-import unittest
 from functions.write_file import write_file
 
 #Test Case 1
