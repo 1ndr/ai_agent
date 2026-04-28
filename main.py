@@ -1,13 +1,14 @@
 import argparse
 import os
+import sys
 
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from call_function import available_functions
-from call_function import call_function 
+from call_function import available_functions, call_function 
 from prompts import system_prompt
+from config import MAX_ITERS
 
 def main():
     load_dotenv()
@@ -27,7 +28,20 @@ def main():
     if args.verbose:
         print(f"User prompt: {args.user_prompt}\n")
 
-    generate_content(client, messages, args.verbose)
+    for _ in range(MAX_ITERS):
+        try:
+            final_response = generate_content(client, messages, args.verbose)
+            if final_response:
+                print("Final response:")
+                print(final_response)
+                return
+        except Exception as e:
+            print(f"Error in generate_content: {e}")
+
+    print(f"Maximum interations ({MAX_ITERS}) reached") 
+    sys.exit(1)
+    
+
 
 def generate_content(client, messages, verbose):
     response = client.models.generate_content(
@@ -46,10 +60,13 @@ def generate_content(client, messages, verbose):
         print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
         print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
+    if response.candidates:
+        for candidate in response.candidates:
+            if candidate.content:
+                messages.append(candidate.content)
+
     if not response.function_calls:
-        print("Response:")
-        print(response.text)
-        return
+        return response.text
 
     function_call_result_response_lst = []
     for function_call in response.function_calls:
@@ -69,6 +86,8 @@ def generate_content(client, messages, verbose):
         if verbose:
             print(f"-> {function_call_result.parts[0].function_response.response}")
 
+    messages.append(types.Content(role="user", parts=function_call_result_response_lst))
+    
 if __name__ == "__main__":
     main()
 
